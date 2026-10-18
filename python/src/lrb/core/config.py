@@ -36,8 +36,7 @@ class StrategyConfig:
 
     # --- boundaries (frozen at basket start) ------------------------------------
     boundary_mode: BoundaryMode = BoundaryMode.FIXED
-    atr_timeframe_sec: int = 900  # M15
-    atr_period: int = 14
+    atr_period: int = 14  # computed on signal_timeframe_sec bars
     atr_mult: float = 1.0  # D = max(atr_mult*ATR, min_distance, spread_mult*spread)
     min_distance_points: float = 150.0
     max_distance_points: float = 1500.0

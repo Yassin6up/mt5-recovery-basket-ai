@@ -11,9 +11,11 @@ Simplifications (documented in docs/VALIDATION.md):
 
 from __future__ import annotations
 
+import bisect
 import math
 import random
-from dataclasses import dataclass, field, replace
+from copy import copy
+from dataclasses import dataclass, field
 from typing import Callable
 
 from lrb.core.types import (
@@ -52,9 +54,11 @@ class SimBroker:
         self._positions: dict[int, Position] = {}
         self._magic_of: dict[int, int] = {}
         self._deals: list[Deal] = []
+        self._deal_times: list[float] = []
         self._next_ticket = 1000
         self._last_rollover_day: int | None = None
         self.stop_outs = 0
+        self._acct_cache: AccountState | None = None
 
     # --------------------------------------------------------------- market data
     def set_tick(self, tick: Tick) -> None:
@@ -65,6 +69,7 @@ class SimBroker:
                 for d in range(prev_day + 1, day + 1):
                     self._apply_swap(d)
         self._tick = tick
+        self._acct_cache = None
         self._check_stop_out()
 
     def last_tick(self) -> Tick:
@@ -103,18 +108,22 @@ class SimBroker:
         return lots * self._margin_per_lot(t.mid)
 
     def account(self) -> AccountState:
+        if self._acct_cache is not None:
+            return self._acct_cache
         floating = sum(self.position_profit(p) + p.swap for p in self._positions.values())
-        return AccountState(self.balance, self.balance + floating, self.used_margin(),
-                            is_demo=self.is_demo, is_hedging=self.is_hedging, leverage=self.leverage)
+        self._acct_cache = AccountState(self.balance, self.balance + floating, self.used_margin(),
+                                        is_demo=self.is_demo, is_hedging=self.is_hedging, leverage=self.leverage)
+        return self._acct_cache
 
     def positions(self, symbol: str, magic: int) -> list[Position]:
-        return [replace(p) for p in self._positions.values() if p.magic == magic and p.symbol == symbol]
+        return [copy(p) for p in self._positions.values() if p.magic == magic and p.symbol == symbol]
 
     def all_positions(self) -> list[Position]:
-        return [replace(p) for p in self._positions.values()]
+        return [copy(p) for p in self._positions.values()]
 
     def deals(self, since: float) -> list[Deal]:
-        return [d for d in self._deals if d.time >= since]
+        i = bisect.bisect_left(self._deal_times, since)
+        return self._deals[i:]
 
     # --------------------------------------------------------------- trading
     def _slip(self) -> float:
@@ -144,15 +153,20 @@ class SimBroker:
         price = t.ask + slip if side is Side.BUY else t.bid - slip
         ticket = self._next_ticket
         self._next_ticket += 1
+        self._acct_cache = None
         self._positions[ticket] = Position(ticket, self.spec_.name, magic, side, filled, price, t.time, comment)
         self.balance += self._commission(filled)  # MT5 debits entry-deal commission immediately
-        self._deals.append(Deal(self._next_deal(), ticket, self.spec_.name, magic, DealEntry.IN, side, filled,
+        self._add_deal(Deal(self._next_deal(), ticket, self.spec_.name, magic, DealEntry.IN, side, filled,
                                 price, t.time, commission=self._commission(filled), comment=comment))
         if self.faults.timeout_sends > 0:
             self.faults.timeout_sends -= 1
             return OrderResult(Retcode.TIMEOUT, message="injected timeout (order WAS filled)")
         code = Retcode.DONE if filled >= volume - 1e-9 else Retcode.DONE_PARTIAL
         return OrderResult(code, filled, price, ticket)
+
+    def _add_deal(self, d: Deal) -> None:
+        self._deals.append(d)
+        self._deal_times.append(d.time)
 
     def _next_deal(self) -> int:
         self._next_ticket += 1
@@ -172,6 +186,7 @@ class SimBroker:
     def _close(self, ticket: int, comment: str) -> OrderResult:
         t = self.last_tick()
         p = self._positions.pop(ticket)
+        self._acct_cache = None
         slip = self._slip()
         price = t.bid - slip if p.side is Side.BUY else t.ask + slip
         move = (price - p.open_price) if p.side is Side.BUY else (p.open_price - price)
@@ -179,7 +194,7 @@ class SimBroker:
         profit = move * v * p.volume
         comm = self._commission(p.volume)
         self.balance += profit + p.swap + comm
-        self._deals.append(Deal(self._next_deal(), ticket, p.symbol, p.magic, DealEntry.OUT, p.side.opposite,
+        self._add_deal(Deal(self._next_deal(), ticket, p.symbol, p.magic, DealEntry.OUT, p.side.opposite,
                                 p.volume, price, t.time, profit=profit, swap=p.swap, commission=comm, comment=comment))
         return OrderResult(Retcode.DONE, p.volume, price, ticket)
 
@@ -190,6 +205,7 @@ class SimBroker:
         for p in self._positions.values():
             pts = self.swap_long_points if p.side is Side.BUY else self.swap_short_points
             p.swap += pts * pt * p.volume * mult
+        self._acct_cache = None
             # balance unaffected until close (MT5 keeps swap on the position)
 
     def _check_stop_out(self) -> None:
