@@ -1,0 +1,417 @@
+{
+  "folds": [
+    {
+      "name": "fold1",
+      "train": [
+        1735689600.866,
+        1737763200.3755999
+      ],
+      "validation": [
+        1737763200.3755999,
+        1739836799.8852
+      ],
+      "test": [
+        1739836799.8852,
+        1741910399.3948
+      ],
+      "n_train": 153,
+      "n_val": 127,
+      "n_test_labels": 147,
+      "model_eval": {
+        "n": 147,
+        "base_rate_loss": 0.10204081632653061,
+        "brier": 0.11050775979700957,
+        "brier_base_rate": 0.09162848812994585,
+        "log_loss": 0.38893187340100566,
+        "reliability": [
+          {
+            "bin": "0.0-0.2",
+            "n": 56,
+            "mean_pred": 0.18193623645794685,
+            "obs_rate": 0.125
+          },
+          {
+            "bin": "0.2-0.4",
+            "n": 91,
+            "mean_pred": 0.2422357377985722,
+            "obs_rate": 0.08791208791208792
+          }
+        ]
+      },
+      "a": {
+        "initial_equity": 10000.0,
+        "final_equity": 10671.311329012573,
+        "net_return_pct": 6.713113290125738,
+        "max_equity_drawdown_pct": 0.7239846312165565,
+        "max_basket_floating_loss": -31.3363401480868,
+        "baskets": 18,
+        "win_rate": 1.0,
+        "expectancy": 37.2950738340321,
+        "expectancy_ci95": [
+          28.191715695180143,
+          46.27929421253457
+        ],
+        "avg_win": 37.2950738340321,
+        "avg_loss": NaN,
+        "worst_basket": 0.10557916331485373,
+        "best_basket": 54.68773415971798,
+        "profit_factor": Infinity,
+        "max_gross_lots": 0.48,
+        "max_margin_utilization_pct": 5.257669890580852,
+        "close_reasons": {
+          "MAX_DURATION": 6,
+          "PROFIT_TARGET": 11,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 11,
+          "2": 5,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "b": {
+        "initial_equity": 10000.0,
+        "final_equity": 10671.311329012573,
+        "net_return_pct": 6.713113290125738,
+        "max_equity_drawdown_pct": 0.7239846312165565,
+        "max_basket_floating_loss": -31.3363401480868,
+        "baskets": 18,
+        "win_rate": 1.0,
+        "expectancy": 37.2950738340321,
+        "expectancy_ci95": [
+          28.191715695180143,
+          46.27929421253457
+        ],
+        "avg_win": 37.2950738340321,
+        "avg_loss": NaN,
+        "worst_basket": 0.10557916331485373,
+        "best_basket": 54.68773415971798,
+        "profit_factor": Infinity,
+        "max_gross_lots": 0.48,
+        "max_margin_utilization_pct": 5.257669890580852,
+        "close_reasons": {
+          "MAX_DURATION": 6,
+          "PROFIT_TARGET": 11,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 11,
+          "2": 5,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "ai_calls": 18,
+      "model_path": "../reports/wf_models/logit-fold1.json"
+    },
+    {
+      "name": "fold2",
+      "train": [
+        1735689600.866,
+        1739836799.8852
+      ],
+      "validation": [
+        1739836799.8852,
+        1741910399.3948
+      ],
+      "test": [
+        1741910399.3948,
+        1743983998.9044
+      ],
+      "n_train": 281,
+      "n_val": 147,
+      "n_test_labels": 143,
+      "model_eval": {
+        "n": 143,
+        "base_rate_loss": 0.03496503496503497,
+        "brier": 0.03883316296616313,
+        "brier_base_rate": 0.03374248129492884,
+        "log_loss": 0.18665231864501977,
+        "reliability": [
+          {
+            "bin": "0.0-0.2",
+            "n": 143,
+            "mean_pred": 0.10479684700800226,
+            "obs_rate": 0.03496503496503497
+          }
+        ]
+      },
+      "a": {
+        "initial_equity": 10000.0,
+        "final_equity": 10739.83929402019,
+        "net_return_pct": 7.398392940201903,
+        "max_equity_drawdown_pct": 1.120421439896957,
+        "max_basket_floating_loss": -76.25253352509418,
+        "baskets": 21,
+        "win_rate": 0.8571428571428571,
+        "expectancy": 35.230442572390686,
+        "expectancy_ci95": [
+          18.650426887895556,
+          47.884017704339364
+        ],
+        "avg_win": 48.37220595126019,
+        "avg_loss": -43.62013770082632,
+        "worst_basket": -78.2911362524576,
+        "best_basket": 54.2661070998204,
+        "profit_factor": 6.653652441405821,
+        "max_gross_lots": 0.48,
+        "max_margin_utilization_pct": 5.654313497026277,
+        "close_reasons": {
+          "PRICE_STOP": 2,
+          "PROFIT_TARGET": 15,
+          "MAX_DURATION": 3,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 15,
+          "2": 4,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "b": {
+        "initial_equity": 10000.0,
+        "final_equity": 10739.83929402019,
+        "net_return_pct": 7.398392940201903,
+        "max_equity_drawdown_pct": 1.120421439896957,
+        "max_basket_floating_loss": -76.25253352509418,
+        "baskets": 21,
+        "win_rate": 0.8571428571428571,
+        "expectancy": 35.230442572390686,
+        "expectancy_ci95": [
+          18.650426887895556,
+          47.884017704339364
+        ],
+        "avg_win": 48.37220595126019,
+        "avg_loss": -43.62013770082632,
+        "worst_basket": -78.2911362524576,
+        "best_basket": 54.2661070998204,
+        "profit_factor": 6.653652441405821,
+        "max_gross_lots": 0.48,
+        "max_margin_utilization_pct": 5.654313497026277,
+        "close_reasons": {
+          "PRICE_STOP": 2,
+          "PROFIT_TARGET": 15,
+          "MAX_DURATION": 3,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 15,
+          "2": 4,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "ai_calls": 21,
+      "model_path": "../reports/wf_models/logit-fold2.json"
+    },
+    {
+      "name": "fold3",
+      "train": [
+        1735689600.866,
+        1741910399.3948
+      ],
+      "validation": [
+        1741910399.3948,
+        1743983998.9044
+      ],
+      "test": [
+        1743983998.9044,
+        1746057598.414
+      ],
+      "n_train": 439,
+      "n_val": 143,
+      "n_test_labels": 162,
+      "model_eval": {
+        "n": 162,
+        "base_rate_loss": 0.09259259259259259,
+        "brier": 0.08737484147866148,
+        "brier_base_rate": 0.08401920438957476,
+        "log_loss": 0.34333031258117874,
+        "reliability": [
+          {
+            "bin": "0.0-0.2",
+            "n": 162,
+            "mean_pred": 0.0349531981744341,
+            "obs_rate": 0.09259259259259259
+          }
+        ]
+      },
+      "a": {
+        "initial_equity": 10000.0,
+        "final_equity": 11020.66972520532,
+        "net_return_pct": 10.20669725205321,
+        "max_equity_drawdown_pct": 0.6675213737840968,
+        "max_basket_floating_loss": -45.37253352509083,
+        "baskets": 24,
+        "win_rate": 0.9166666666666666,
+        "expectancy": 42.52790521688862,
+        "expectancy_ci95": [
+          34.13619021976135,
+          49.643066029196234
+        ],
+        "avg_win": 47.459536107727104,
+        "avg_loss": -11.72003458233462,
+        "worst_basket": -23.14454261655034,
+        "best_basket": 55.463533613554176,
+        "profit_factor": 44.54380177101878,
+        "max_gross_lots": 0.54,
+        "max_margin_utilization_pct": 6.297068672153683,
+        "close_reasons": {
+          "PROFIT_TARGET": 16,
+          "MAX_DURATION": 7,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 16,
+          "2": 6,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "b": {
+        "initial_equity": 10000.0,
+        "final_equity": 11020.66972520532,
+        "net_return_pct": 10.20669725205321,
+        "max_equity_drawdown_pct": 0.6675213737840968,
+        "max_basket_floating_loss": -45.37253352509083,
+        "baskets": 24,
+        "win_rate": 0.9166666666666666,
+        "expectancy": 42.52790521688862,
+        "expectancy_ci95": [
+          34.13619021976135,
+          49.643066029196234
+        ],
+        "avg_win": 47.459536107727104,
+        "avg_loss": -11.72003458233462,
+        "worst_basket": -23.14454261655034,
+        "best_basket": 55.463533613554176,
+        "profit_factor": 44.54380177101878,
+        "max_gross_lots": 0.54,
+        "max_margin_utilization_pct": 6.297068672153683,
+        "close_reasons": {
+          "PROFIT_TARGET": 16,
+          "MAX_DURATION": 7,
+          "END_OF_DATA": 1
+        },
+        "legs_histogram": {
+          "1": 16,
+          "2": 6,
+          "3": 2
+        },
+        "stop_outs": 0,
+        "notes": ""
+      },
+      "ai_calls": 24,
+      "model_path": "../reports/wf_models/logit-fold3.json"
+    }
+  ],
+  "holdout": {
+    "name": "holdout",
+    "train": [
+      1735689600.866,
+      1743983998.9044
+    ],
+    "validation": [
+      1743983998.9044,
+      1746057598.414
+    ],
+    "test": [
+      1746057598.414,
+      1748649598.801
+    ],
+    "n_train": 594,
+    "n_val": 162,
+    "n_test_labels": 212,
+    "model_eval": {
+      "n": 212,
+      "base_rate_loss": 0.02830188679245283,
+      "brier": 0.032396288188932344,
+      "brier_base_rate": 0.02750088999644002,
+      "log_loss": 0.16558578073100239,
+      "reliability": [
+        {
+          "bin": "0.0-0.2",
+          "n": 212,
+          "mean_pred": 0.09436559279608876,
+          "obs_rate": 0.02830188679245283
+        }
+      ]
+    },
+    "a": {
+      "initial_equity": 10000.0,
+      "final_equity": 11409.21826277235,
+      "net_return_pct": 14.092182627723515,
+      "max_equity_drawdown_pct": 0.7636513932609335,
+      "max_basket_floating_loss": -49.683974242836115,
+      "baskets": 31,
+      "win_rate": 0.9354838709677419,
+      "expectancy": 45.458653637817946,
+      "expectancy_ci95": [
+        38.62697971674287,
+        51.21689031163611
+      ],
+      "avg_win": 48.80445818230736,
+      "avg_loss": -3.0555122572785054,
+      "worst_basket": -5.74905226758144,
+      "best_basket": 57.091106266594764,
+      "profit_factor": 231.60261980875245,
+      "max_gross_lots": 0.54,
+      "max_margin_utilization_pct": 6.245648889385547,
+      "close_reasons": {
+        "PROFIT_TARGET": 23,
+        "MAX_DURATION": 7,
+        "END_OF_DATA": 1
+      },
+      "legs_histogram": {
+        "1": 22,
+        "2": 6,
+        "3": 3
+      },
+      "stop_outs": 0,
+      "notes": ""
+    },
+    "b": {
+      "initial_equity": 10000.0,
+      "final_equity": 11409.21826277235,
+      "net_return_pct": 14.092182627723515,
+      "max_equity_drawdown_pct": 0.7636513932609335,
+      "max_basket_floating_loss": -49.683974242836115,
+      "baskets": 31,
+      "win_rate": 0.9354838709677419,
+      "expectancy": 45.458653637817946,
+      "expectancy_ci95": [
+        38.62697971674287,
+        51.21689031163611
+      ],
+      "avg_win": 48.80445818230736,
+      "avg_loss": -3.0555122572785054,
+      "worst_basket": -5.74905226758144,
+      "best_basket": 57.091106266594764,
+      "profit_factor": 231.60261980875245,
+      "max_gross_lots": 0.54,
+      "max_margin_utilization_pct": 6.245648889385547,
+      "close_reasons": {
+        "PROFIT_TARGET": 23,
+        "MAX_DURATION": 7,
+        "END_OF_DATA": 1
+      },
+      "legs_histogram": {
+        "1": 22,
+        "2": 6,
+        "3": 3
+      },
+      "stop_outs": 0,
+      "notes": ""
+    },
+    "ai_calls": 31,
+    "model_path": "../reports/wf_models/logit-holdout.json"
+  },
+  "data_note": "SYNTHETIC"
+}

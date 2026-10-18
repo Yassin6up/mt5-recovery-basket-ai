@@ -1,0 +1,14 @@
+scenario                     baskets  realized     worst maxpos open >risk  reasons
+-----------------------------------------------------------------------------------
+sideways_oscillation               0      0.00      0.00      3    3 False  
+strong_trend_down                  1     50.85     50.85      2    0 False  PROFIT_TARGET
+strong_trend_after_3_legs          1    -77.39    -77.39      3    0 False  PRICE_STOP
+sudden_reversal                    0      0.00      0.00      2    2 False  
+gap_through_stop                   1   -206.79   -206.79      2    0  True  BASKET_LOSS_LIMIT
+spread_spike_at_signal             0      0.00      0.00      0    0 False  
+insufficient_margin                0      0.00      0.00      0    0 False  
+ai_outage_mid_basket               1    -80.33    -80.33      3    0 False  PRICE_STOP
+vps_restart_mid_basket             1     51.67     51.67      3    0 False  PROFIT_TARGET
+duplicate_signals                  1     50.55     50.55      1    0 False  PROFIT_TARGET
+partial_fill_leg2                  1    -13.63    -13.63      2    0 False  PRICE_STOP
+failed_basket_close                1     58.95     58.95      1    0 False  PROFIT_TARGET

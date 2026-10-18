@@ -1,0 +1,30 @@
+== DRIFTLESS synthetic random walk seed=11 (no trend regimes) ==
+net return after costs : -0.70%  (equity 10000.00 -> 9929.94)
+max equity drawdown    : 1.82%
+worst basket float loss: -92.92
+baskets                : 41
+win rate               : 56.1%  (NOT evidence of profitability on its own)
+expectancy / basket    : -1.71  bootstrap 95% CI [-13.38, +8.39]
+avg win / avg loss     : +21.77 / -31.71
+best / worst basket    : +57.48 / -94.87
+profit factor          : 0.88
+max gross lots         : 0.48
+max margin utilization : 5.20% of equity
+legs filled histogram  : {1: 23, 2: 8, 3: 10}
+close reasons          : {'MAX_DURATION': 33, 'PRICE_STOP': 3, 'PROFIT_TARGET': 4, 'END_OF_DATA': 1}
+broker stop-outs       : 0
+== DRIFTLESS synthetic random walk seed=12 (no trend regimes) ==
+net return after costs : -1.77%  (equity 10000.00 -> 9823.32)
+max equity drawdown    : 2.87%
+worst basket float loss: -133.67
+baskets                : 40
+win rate               : 40.0%  (NOT evidence of profitability on its own)
+expectancy / basket    : -4.42  bootstrap 95% CI [-14.60, +3.62]
+avg win / avg loss     : +17.01 / -18.70
+best / worst basket    : +49.61 / -135.88
+profit factor          : 0.61
+max gross lots         : 0.48
+max margin utilization : 5.53% of equity
+legs filled histogram  : {1: 23, 2: 11, 3: 6}
+close reasons          : {'MAX_DURATION': 35, 'BASKET_LOSS_LIMIT': 1, 'PRICE_STOP': 2, 'PROFIT_TARGET': 1, 'END_OF_DATA': 1}
+broker stop-outs       : 0

@@ -201,11 +201,9 @@ def compute_base_lot(
         res.reason = "LEG_VOLUME_BELOW_MIN"
         return res
     # Re-check with the floored leg volumes (flooring can only reduce risk, but be exact).
-    planned = max(
-        s.loss_price_units * spec.value_per_price_unit_loss * q
-        + 2.0 * cfg.commission_per_lot_side * sum(vols[: s.legs_filled])
-        for s in scen
-    )
+    # Conservative (and identical to Sizing.mqh): worst price loss + round-turn commission of ALL legs.
+    planned = max(s.loss_price_units for s in scen) * spec.value_per_price_unit_loss * q \
+        + 2.0 * cfg.commission_per_lot_side * sum(vols)
     res.ok, res.base_lot, res.volumes, res.planned_max_loss = True, q, vols, planned
     if planned > budget + 1e-9:
         res.ok, res.reason = False, "PLANNED_LOSS_EXCEEDS_BUDGET"

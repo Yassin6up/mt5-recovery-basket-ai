@@ -1,0 +1,32 @@
+# /etc/systemd/system/lrb.service - LRB decision service on a SEPARATE Linux host.
+# The MT5 terminal + EA still run on Windows; this host only answers decisions/telemetry.
+[Unit]
+Description=Limited Recovery Basket AI decision service (no trading authority)
+After=network-online.target time-sync.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=lrb
+Group=lrb
+EnvironmentFile=/etc/lrb/lrb.env
+WorkingDirectory=/opt/lrb/python
+ExecStart=/opt/lrb/python/.venv/bin/lrb-service
+Restart=always
+RestartSec=3
+TimeoutStopSec=10
+# hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/lrb
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

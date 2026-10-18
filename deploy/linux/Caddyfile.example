@@ -1,0 +1,11 @@
+# TLS reverse proxy for a remote decision service. Replace the host name and Windows VPS IP.
+# Caddy obtains certificates automatically. Only the Windows VPS may reach the API.
+lrb.example.com {
+    @ea remote_ip 203.0.113.10
+    handle @ea {
+        reverse_proxy 127.0.0.1:8787
+    }
+    handle {
+        respond "forbidden" 403
+    }
+}

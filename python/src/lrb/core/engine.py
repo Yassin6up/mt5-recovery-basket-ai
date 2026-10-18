@@ -595,15 +595,16 @@ class Engine:
         else:
             leg.state = LegState.PLANNED
             self._exec_error(now, "LEG_SEND_FAILED", leg=leg.index, retcode=res.retcode.value)
-            if leg.attempts >= cfg.leg_max_attempts:
+            if leg.index == 1:
+                # Leg 1 is never retried: the signal belongs to one bar, and nothing is exposed yet.
                 leg.state = LegState.FAILED
-                if leg.index == 1:
-                    self._event(now, "BASKET_ABORTED", basket=b.basket_id)
-                    self.basket = None
-                    self.phase = Phase.FLAT
-                    self.guard.cooldown_until = now + 60
-                else:
-                    self._stop_adding(now, "LEG_SEND_FAILED", leg=leg.index)
+                self._event(now, "BASKET_ABORTED", basket=b.basket_id)
+                self.basket = None
+                self.phase = Phase.FLAT
+                self.guard.cooldown_until = now + 60
+            elif leg.attempts >= cfg.leg_max_attempts:
+                leg.state = LegState.FAILED
+                self._stop_adding(now, "LEG_SEND_FAILED", leg=leg.index)
         return res
 
     def _exec_error(self, now: float, kind: str, **data: Any) -> None:

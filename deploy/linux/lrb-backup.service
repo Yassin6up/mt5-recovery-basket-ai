@@ -1,0 +1,7 @@
+[Unit]
+Description=LRB SQLite online backup
+
+[Service]
+Type=oneshot
+User=lrb
+ExecStart=/opt/lrb/python/.venv/bin/python -m lrb.service.backup /var/lib/lrb/lrb_service.db /var/lib/lrb/backups 14

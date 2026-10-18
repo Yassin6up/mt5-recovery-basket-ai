@@ -539,7 +539,7 @@ void UpdateKill()
    if(ReadFileText(g_dir + "KILL", txt))
      {
       if(StringFind(txt, "FLATTEN") >= 0) k = KILL_FLATTEN;
-      else if(StringFind(txt, "HALT") >= 0) k = MathMax(k, KILL_HALT);
+      else if(StringFind(txt, "HALT") >= 0 && k < KILL_HALT) k = KILL_HALT;
      }
    if(k != gd.kill) { gd.kill = k; Log("KILL_SWITCH", KillName(k)); g_dirty = true; }
   }
@@ -960,7 +960,7 @@ void AckLeg(const int i, const ulong ticket, const double vol, const double pric
       g.phase = PHASE_ACTIVE;
       g_phase = PHASE_ACTIVE;
      }
-   Log("LEG_FILLED", StringFormat("leg=%d side=%d vol=%.2f price=%.6f partial=%d late=%d", i + 1, g.legs[i].side, vol, price, partial, late));
+   Log("LEG_FILLED", StringFormat("leg=%d side=%d vol=%.2f price=%.6f partial=%d late=%d", i + 1, g.legs[i].side, vol, price, (int)partial, (int)late));
    if(partial && i + 1 < g.n_legs) StopAdding("PARTIAL_FILL");
    if(i + 1 >= g.n_legs && g.adding_allowed) { g.adding_allowed = false; g.block_reason = "MAX_LEGS_REACHED"; }
    Rearm();
@@ -1043,7 +1043,7 @@ void Finalize()
    for(int i = 0; i < g.n_legs; i++) if(g.legs[i].state == LEG_FILLED || g.legs[i].state == LEG_PARTIAL) filled++;
    string rep = StringFormat("reason=%s legs=%d/%d trigger_pnl=%.2f realized_pnl=%.2f risk=%.2f target=%.2f max_float_loss=%.2f orphan=%d",
                              g.close_reason, filled, g.n_legs, g.close_trigger_pnl, realized, g.risk_money,
-                             g.target_money, g.max_float_loss, g.orphan);
+                             g.target_money, g.max_float_loss, (int)g.orphan);
    Log("BASKET_CLOSED", rep);
    int h = FileOpen(g_dir + "baskets.csv", FILE_READ | FILE_WRITE | FILE_TXT | FILE_COMMON | FILE_ANSI | FILE_SHARE_READ);
    if(h != INVALID_HANDLE)
@@ -1157,11 +1157,18 @@ void SendLeg(const int i, const MqlTick &tk)
    if(rc == TRADE_RETCODE_PLACED || rc == TRADE_RETCODE_TIMEOUT || rc == 0) return;   // unknown outcome -> reconcile
    g.legs[i].state = LEG_PLANNED;
    ExecError(StringFormat("LEG_SEND_FAILED leg=%d retcode=%u %s", i + 1, rc, g_trade.ResultRetcodeDescription()));
-   if(g.legs[i].attempts >= InpLegMaxAttempts)
+   if(i == 0)   // leg 1 is never retried: the signal belongs to one bar and nothing is exposed yet
      {
       g.legs[i].state = LEG_FAILED;
-      if(i == 0) { Log("BASKET_ABORTED"); g.exists = false; g_phase = PHASE_FLAT; gd.cooldown_until = TimeGMT() + 60; }
-      else StopAdding("LEG_SEND_FAILED");
+      Log("BASKET_ABORTED");
+      g.exists = false;
+      g_phase = PHASE_FLAT;
+      gd.cooldown_until = TimeGMT() + 60;
+     }
+   else if(g.legs[i].attempts >= InpLegMaxAttempts)
+     {
+      g.legs[i].state = LEG_FAILED;
+      StopAdding("LEG_SEND_FAILED");
      }
    g_dirty = true;
   }
@@ -1362,6 +1369,16 @@ void Process()
    if(g_dirty) SaveState();
   }
 
+// Late responses for requests that already timed out are never used; remove them at start.
+void CleanupStaleResponses()
+  {
+   string name;
+   long h = FileFindFirst(g_dir + "resp_*.json", name, FILE_COMMON);
+   if(h == INVALID_HANDLE) return;
+   do { FileDelete(g_dir + name, FILE_COMMON); } while(FileFindNext(h, name));
+   FileFindClose(h);
+  }
+
 int OnInit()
   {
    if(!ParseProgression()) { Print("LRB: invalid progression / max positions"); return INIT_PARAMETERS_INCORRECT; }
@@ -1390,11 +1407,12 @@ int OnInit()
    g_block_init = AccountPermission();
    g_trading_permitted = (g_block_init == "");
    if(!g_trading_permitted) Print("LRB: NEW ENTRIES DISABLED: ", g_block_init, " (existing basket positions are still managed)");
+   CleanupStaleResponses();
    g_phase = PHASE_RECONCILE;   // never trade before reconciling with actual broker positions
    EventSetMillisecondTimer(500);
    Log("INIT", StringFormat("v%s symbol=%s magic=%I64d demo=%d hedging=%d permitted=%d", LRB_VERSION, _Symbol, InpMagic,
-                           AccountInfoInteger(ACCOUNT_TRADE_MODE) == ACCOUNT_TRADE_MODE_DEMO,
-                           AccountInfoInteger(ACCOUNT_MARGIN_MODE) == ACCOUNT_MARGIN_MODE_RETAIL_HEDGING, g_trading_permitted));
+                           (int)(AccountInfoInteger(ACCOUNT_TRADE_MODE) == ACCOUNT_TRADE_MODE_DEMO),
+                           (int)(AccountInfoInteger(ACCOUNT_MARGIN_MODE) == ACCOUNT_MARGIN_MODE_RETAIL_HEDGING), (int)g_trading_permitted));
    return INIT_SUCCEEDED;
   }
 

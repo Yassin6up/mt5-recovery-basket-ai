@@ -198,6 +198,15 @@ def test_rejected_leg_retried_then_abandoned(h):
     assert len(h.broker.all_positions()) == 1
 
 
+def test_rejected_leg1_aborts_basket_without_stuck_state(h):
+    h.tick(1.1)
+    h.broker.faults.reject_sends = 1
+    h.tick(1.1, signal=Side.BUY)
+    assert h.engine.basket is None and h.engine.phase is Phase.FLAT
+    assert h.broker.all_positions() == []
+    assert any(e["event"] == "BASKET_ABORTED" for e in h.engine.events)
+
+
 def test_manual_and_foreign_positions_never_touched(h):
     manual = h.broker.open_foreign(Side.SELL, 0.5, magic=0) if h.broker._tick else None
     h.tick(1.1)

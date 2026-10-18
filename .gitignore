@@ -16,3 +16,5 @@ models/*.json
 *.ex5
 secrets/
 backups/
+!reports/*_synthetic.txt
+!reports/walkforward_synthetic.json

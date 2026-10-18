@@ -24,8 +24,8 @@ void OnStart()
    j += JStr("terminal_build", IntegerToString(TerminalInfoInteger(TERMINAL_BUILD))) + ",";
    j += JStr("terminal_path", TerminalInfoString(TERMINAL_PATH)) + ",";
    j += JStr("common_data_path", TerminalInfoString(TERMINAL_COMMONDATA_PATH)) + ",";
-   j += JBool("connected", TerminalInfoInteger(TERMINAL_CONNECTED)) + ",";
-   j += JBool("algo_trading_enabled", TerminalInfoInteger(TERMINAL_TRADE_ALLOWED)) + ",";
+   j += JBool("connected", (TerminalInfoInteger(TERMINAL_CONNECTED) != 0)) + ",";
+   j += JBool("algo_trading_enabled", (TerminalInfoInteger(TERMINAL_TRADE_ALLOWED) != 0)) + ",";
    j += JStr("broker_company", AccountInfoString(ACCOUNT_COMPANY)) + ",";
    j += JStr("broker_server", AccountInfoString(ACCOUNT_SERVER)) + ",";
    j += JStr("account_currency", AccountInfoString(ACCOUNT_CURRENCY)) + ",";
@@ -58,7 +58,7 @@ void OnStart()
    j += JNum("volume_limit", SymbolInfoDouble(s, SYMBOL_VOLUME_LIMIT), 4) + ",";
    j += JNum("margin_initial", SymbolInfoDouble(s, SYMBOL_MARGIN_INITIAL), 4) + ",";
    j += JNum("margin_hedged", SymbolInfoDouble(s, SYMBOL_MARGIN_HEDGED), 4) + ",";
-   j += JBool("margin_hedged_use_leg", SymbolInfoInteger(s, SYMBOL_MARGIN_HEDGED_USE_LEG)) + ",";
+   j += JBool("margin_hedged_use_leg", (SymbolInfoInteger(s, SYMBOL_MARGIN_HEDGED_USE_LEG) != 0)) + ",";
    j += JInt("calc_mode", SymbolInfoInteger(s, SYMBOL_TRADE_CALC_MODE)) + ",";
    j += JInt("trade_mode", SymbolInfoInteger(s, SYMBOL_TRADE_MODE)) + ",";
    j += JInt("execution_mode", SymbolInfoInteger(s, SYMBOL_TRADE_EXEMODE)) + ",";
@@ -66,7 +66,7 @@ void OnStart()
    j += JInt("stops_level", SymbolInfoInteger(s, SYMBOL_TRADE_STOPS_LEVEL)) + ",";
    j += JInt("freeze_level", SymbolInfoInteger(s, SYMBOL_TRADE_FREEZE_LEVEL)) + ",";
    j += JInt("spread_current_points", SymbolInfoInteger(s, SYMBOL_SPREAD)) + ",";
-   j += JBool("spread_float", SymbolInfoInteger(s, SYMBOL_SPREAD_FLOAT)) + ",";
+   j += JBool("spread_float", (SymbolInfoInteger(s, SYMBOL_SPREAD_FLOAT) != 0)) + ",";
    j += JNum("swap_long", SymbolInfoDouble(s, SYMBOL_SWAP_LONG), 4) + ",";
    j += JNum("swap_short", SymbolInfoDouble(s, SYMBOL_SWAP_SHORT), 4) + ",";
    j += JInt("swap_mode", SymbolInfoInteger(s, SYMBOL_SWAP_MODE)) + ",";
