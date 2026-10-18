@@ -9,7 +9,8 @@
 //| - All exits are local and deterministic.                         |
 //| Port of python/src/lrb/core/engine.py (reference + tests).       |
 //+------------------------------------------------------------------+
-#property copyright "Limited Recovery Basket AI - research software"
+#property copyright "MIT License - Copyright (c) 2026 Yassin6up and contributors"
+#property link      "https://github.com/Yassin6up/TRading"
 #property version   "0.10"
 #property strict
 #property description "Alternating hedge basket ([1,2,3] x base lot) closed as a whole on net target or hard risk limits."

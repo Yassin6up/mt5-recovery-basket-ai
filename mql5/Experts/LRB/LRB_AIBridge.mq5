@@ -15,7 +15,8 @@
 //| Setup: Tools > Options > Expert Advisors > "Allow WebRequest for |
 //| listed URL" and add the service URL (e.g. http://127.0.0.1:8787).|
 //+------------------------------------------------------------------+
-#property copyright "Limited Recovery Basket AI - research software"
+#property copyright "MIT License - Copyright (c) 2026 Yassin6up and contributors"
+#property link      "https://github.com/Yassin6up/TRading"
 #property version   "0.10"
 #property strict
 

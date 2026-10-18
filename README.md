@@ -133,3 +133,12 @@ If the terminal is down, close the positions manually in MT5 or at the broker.
 * [docs/VALIDATION.md](docs/VALIDATION.md): methodology, test inventory, synthetic results, AI vs no AI
 * [docs/OPERATIONS.md](docs/OPERATIONS.md): install, demo setup, MT5 autostart, backups, emergency shutdown
 * [docs/ENVIRONMENT_INSPECTION.md](docs/ENVIRONMENT_INSPECTION.md): what was and was not inspected
+
+## License and contributing
+
+This project is open source under the [MIT License](LICENSE). Anyone may use, copy, modify,
+merge, publish, distribute and sell copies of it, provided the license notice is kept. It comes
+**without any warranty**: the authors are not liable for trading losses or any other damage.
+
+Improvements are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to submit changes and the
+safety rules every change must keep.
