@@ -1,6 +1,17 @@
-# Limited Recovery Basket AI
+# Limited Recovery Basket AI — open-source MT5 Expert Advisor with a Python AI filter
 
-A MetaTrader 5 Expert Advisor, plus a Python decision service, research backtester and
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Tests](https://github.com/Yassin6up/TRading/actions/workflows/tests.yml/badge.svg)](https://github.com/Yassin6up/TRading/actions/workflows/tests.yml)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)
+![MetaTrader 5](https://img.shields.io/badge/MetaTrader-5%20(MQL5)-orange.svg)
+![Status: demo only](https://img.shields.io/badge/status-research%20%2F%20demo%20only-red.svg)
+
+**Free, open-source MetaTrader 5 (MT5) Expert Advisor in MQL5**, with a Python FastAPI AI
+decision service, a tick-level forex backtester with walk-forward validation, and Windows/Linux
+VPS deployment scripts. It trades a **limited** hedging recovery basket (not unlimited martingale)
+with a deterministic risk engine. Fork it, study it, improve it.
+
+It is a MetaTrader 5 Expert Advisor, plus a Python decision service, research backtester and
 deployment scripts, for a **limited** alternating-hedge recovery basket:
 
 * Open BUY 1q. If the bid reaches the lower boundary, add SELL 2q. If the ask returns to the
@@ -142,3 +153,33 @@ merge, publish, distribute and sell copies of it, provided the license notice is
 
 Improvements are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to submit changes and the
 safety rules every change must keep.
+
+## Who this is for
+
+* **Algorithmic traders** who want a transparent MT5 hedging EA with real risk limits to study on a demo account.
+* **MQL5 developers** looking for an example of a state-machine EA, crash-safe restarts, basket
+  accounting and HMAC-signed `WebRequest` communication.
+* **Python and quant developers** interested in tick-level backtesting, walk-forward validation,
+  calibrated probability models, and honest A/B evaluation of an AI trade filter.
+
+## FAQ
+
+**Is this a martingale EA?** No. It is a *limited* recovery basket: at most the configured number of
+legs (default 1×, 2×, 3× the base lot), never automatic doubling, a hard money and price stop,
+daily-loss and drawdown halts.
+
+**Does the AI make it profitable?** There is no evidence that it does. On synthetic data the AI
+filter showed no skill (see [docs/VALIDATION.md](docs/VALIDATION.md)). Results on real broker data are welcome as contributions.
+
+**Can I run it live?** It is demo-only by default. Live trading needs three deliberate input
+changes, and it is entirely at your own risk (see the MIT License: no warranty).
+
+**Does it run on Linux?** The Python service and backtester do. The MT5 terminal and EA need Windows
+(the official `MetaTrader5` Python package is Windows-only).
+
+## Keywords
+
+MetaTrader 5, MT5, MQL5, Expert Advisor, EA, forex trading bot, algorithmic trading, hedging EA,
+recovery basket, grid and hedge strategy, risk management, position sizing, AI trading filter,
+machine learning, FastAPI, Python backtesting, tick data, walk-forward analysis, VPS deployment,
+open source trading software.
